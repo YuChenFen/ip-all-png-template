@@ -1,187 +1,107 @@
 ---
-name: ip-all-png-template
-description: Generate reusable image prompts for Chinese article illustrations in a fixed Ian-style minimal white-paper hand-drawn sketch style, with only the IP character and color palette left for the user to fill. Use when the user wants article illustrations, PNG prompts, shot lists, knowledge-card illustrations, or wants to turn their own IP role and brand colors into a repeatable simple-line-drawing prompt template.
+name: ian-xiaohei-illustrations
+description: 生成 Ian 风格的中文正文配图。用于用户要求为中文文章、帖子、博客、Notion 文档、工作流文档、方法论、流程、结构、状态、隐喻或观点生成“怪诞”“卫衣少年”“Q版”“手绘”“正文配图”“文章插图”“配图建议”“shot list”“去标题/改图”等任务；默认使用固定 IP 角色（浅灰卫衣 Q 版少年）、纯白手绘、少量红橙蓝批注、简洁清爽但天马行空的视觉风格。
 ---
 
-# IP All PNG Template
+# Ian 卫衣少年怪诞正文配图
 
-## Purpose
+## 核心定位
 
-Create image-generation prompts for Chinese article illustrations with a reusable personal IP character.
+为中文文章设计和生成 16:9 横版正文配图。目标不是做商业插画、PPT 信息图或卖萌海报，而是把文章里的关键判断、流程、结构、状态或隐喻，变成一张清爽、怪诞、有创意、可读但不说明书的手绘解释图。
 
-This is a delivery-ready template. It keeps the base visual style fixed: Ian-style minimal white-paper hand-drawn conceptual illustration, like a clean simple-line sketch for article body images.
+默认视觉 IP 是“卫衣少年”：Q 版卡通男生，黑色短发、圆脸腮红、明亮双眼、微笑，浅灰色连帽卫衣、卡其色卷边休闲裤、白色帆布鞋。角色必须参与画面的核心动作，不能只是站在旁边当装饰。形象以 `assets/character-reference.png` 为准，保持跨图一致。
 
-Only the creator-specific parts are removed: fixed creator identity, fixed IP character, fixed companion, and fixed color palette. Before generating prompts, ask the user to fill in their own IP character and color rules, then inject those rules into every prompt.
+## 先读这些参考
 
-Default to clean, sparse, conceptual simple-line article illustrations. Do not drift into dense Xiaohongshu card/poster design unless the user explicitly asks for a card, poster, or cover.
+按任务需要读取，不要一次塞满上下文：
 
-This skill is prompt-first. Produce shot lists and single-image prompts. Do not call image generation unless the user explicitly asks to generate images.
+- `references/style-dna.md`：风格 DNA、颜色、文字、禁忌。
+- `references/ip-character.md`：固定 IP 角色（卫衣少年）的形象、性格、动作库和禁忌。
+- `assets/character-reference.png`：固定 IP 角色的形象参考图，生成时用于保持角色一致。
+- `references/composition-patterns.md`：结构类型、原创隐喻方法和反复刻规则。
+- `references/prompt-template.md`：单张生图提示词模板。
+- `references/qa-checklist.md`：生成后检查和迭代规则。
+- `assets/examples/`：旧“小黑”风格样例，只作线条密度与留白校准，不进入默认生成路径。角色一律按新 IP（character-reference.png）绘制，不要照抄这些案例的构图、物件或标注。
 
-## Required Reference
+## 工作流
 
-Read `references/ip-visual-template-json.md` when the user needs a structured JSON spec, a reusable style block, or detailed IP constraints.
+### 1. 消化正文
 
-## Fixed Base Drawing Style
+先读用户给的正文、链接、Notion 页面、Markdown 文件或截图内容。提炼：
 
-Do not remove or replace the base drawing style. This template always keeps the following visual foundation:
+- 核心观点是什么
+- 哪些段落承担认知转折
+- 哪些内容适合用图解释
+- 哪些地方只适合文字，不需要图
 
-```text
-基础画风：
-16:9 横版中文文章配图，简笔画风格，纯白背景，大面积留白。
-整体像白纸上的手绘概念草图，而不是海报、卡片或正式信息图。
-画面以细黑色手绘线条为主，线条略微自然抖动，有手画感。
-结构清晰、元素少，一张图只表达一个核心观点。
-可以使用少量中文手写标注，通常 2-4 个短标签。
-构图偏“知识解释图 / 产品草图 / 白板涂鸦”，用低技术感的隐喻物件表达概念，比如纸盒、抽屉、漏斗、天平、门、梯子、管道、线团、黑箱、旧机器等。
-IP 角色只作为小引导者出现，默认占画面宽度 8%-12%，不要成为画面主体。
-整体干净、克制、轻松，有一点荒诞的概念表达，但不要做成小红书密集卡片、PPT 信息图、商业海报、3D 渲染或复杂架构图。
-```
+不要平均配图。优先选择“认知锚点”，例如：核心判断、两个断点、输入输出闭环、分流、前后对比、一鱼多吃、承接路径、常见坑、角色状态变化。
 
-Only these two parts are user-fill variables:
+### 2. 先出配图策略
 
-1. IP character formula.
-2. Color palette.
+如果用户只是说“分析怎么配图 / 思考哪些地方需要配图”，先给 shot list。每张图写清楚：
 
-## User-Fill IP Formula
+- 放在哪个段落后
+- 图的主题
+- 核心意思
+- 结构类型
+- 角色在图里做什么
+- 建议元素
+- 建议中文标注词
 
-Before writing image prompts, collect or infer the user's IP settings. If the user has not provided them, show this fill-in template and ask them to complete it:
+默认 4-8 张。文章很短时 1-3 张；长文也不要轻易超过 9 张。够用就好，避免把正文做成画册。
 
-```text
-IP character formula:
-年龄: 青年
-性别: 男性
-头发颜色: 黑色
-头发长短/发型: 蓬松短发
-衣服颜色: 浅灰色
-衣服款式: 连帽卫衣
-衣服长短: 常规长度
-裙子/裤子颜色: 卡其色
-裙子/裤子款式: 卷边休闲裤
-裙子/裤子长短: 长裤
-鞋子颜色: 白色
-鞋子款式: 休闲鞋
-鞋子长短/高度: 低帮
-可选配饰: 无
-可选陪伴物/宠物/道具: 无
-角色气质: 可爱、阳光、开朗、友好
+### 3. 单张生成
 
-Color palette:
-主色: 浅灰色
-辅助色: 卡其色
-强调色: 白色
-背景色: 纯白
-禁用颜色: 大面积荧光色、浓重紫色
-整体风格关键词: Q版可爱、清新、干净、手绘、留白
-```
+如果用户明确要求“生成 / 输出 / 做图 / 帮我生成”，不要停下来等确认；用内置 `image_gen` 每张单独生成。不要把多张图拼在一张里。
 
-> 当前默认 IP 公式与配色已按用户提供的 Q 版角色图片填写（黑色蓬松短发男孩、浅灰连帽卫衣、卡其卷边休闲裤、白色低帮休闲鞋）。如需更换，重新填写上述字段即可。
+每张图只讲一个核心结构。提示词必须包含：
 
-The IP character should remain fixed across images. The exact character details can change only when the user explicitly updates the formula.
+- 16:9 横版中文正文配图
+- 纯白背景
+- 黑色手绘线稿
+- 少量红色/橙色/蓝色中文手写批注
+- 大量留白
+- 固定 IP 角色（卫衣少年）作为核心动作主体
+- 禁止 PPT、商业插画、卖萌堆料、复杂架构、左上角类型标题
 
-## Core Style
+不要复刻过往案例。案例只提供风格密度和角色参与方式，不能直接复用“传送带断点 / 角色拉线 / 素材鱼 / 盖章工具箱 / 常见坑路径”等已有构图，除非用户明确要求复刻某张图。每次都要从当前文章重新发明一个奇怪但成立的隐喻。
 
-Use this visual direction:
+### 4. 检查与迭代
 
-- 16:9 horizontal Chinese article illustration by default.
-- Fixed base style: Ian-style minimal white-paper hand-drawn simple sketch.
-- Pure white background by default; use another simple background only if the user explicitly asks.
-- Thin black hand-drawn line art first; use color sparsely unless the user asks for a richer card/poster style.
-- Large whitespace and clear composition, closer to a whiteboard/product sketch or article doodle than a dense poster.
-- Sparse Chinese handwritten annotations, usually 2-4 labels.
-- One image explains one core action, structure, status, or metaphor.
-- The user-defined IP character must participate in the core visual action.
-- If the user defines a companion object, pet, or mascot, keep it secondary and supportive.
-- Do not change the base drawing style when replacing the IP character or color palette.
+生成后检查 `references/qa-checklist.md`。如果出现以下问题，优先重生成或局部编辑：
 
-## Custom IP Rules
+- 角色只是装饰，没有参与核心动作
+- 画面太满
+- 太像流程图/PPT
+- 中文太多或错字严重
+- 左上角出现“常见坑/流程图/系统架构图”等标题
+- 卖萌装饰堆料、幼稚、死板
+- 背景不是干净白底
 
-The protagonist must follow the user's filled IP formula:
+### 5. 保存交付
 
-- Keep age, gender, hair color, hairstyle, clothing, bottoms, shoes, accessories, and overall temperament consistent.
-- Use the user's palette as the source of all accent colors.
-- Do not introduce a new hairstyle, outfit, companion, or brand color unless the user asks.
-- Default character scale: the IP character should be a small guide character, around 8%-12% of the canvas width, unless the user explicitly asks for a character-focused image.
-- The IP character should perform the core conceptual action: pointing, carrying, sorting, opening, connecting, repairing, weighing, holding notes, guiding a companion, or operating a low-tech metaphor object.
-- If a companion is defined, it may assist, observe, hold a small sign, peek from a module, or sit beside the main action.
-
-## Prompt Workflow
-
-1. Digest the supplied article, topic, outline, or idea.
-2. Confirm the user's IP formula and color palette. If missing, ask the user to fill the template in `User-Fill IP Formula`.
-3. Identify the strongest visual anchor: core judgment, before/after change, workflow, bottleneck, route, common pitfall, or role-state shift.
-4. Choose one structure type:
-   - workflow
-   - system partial
-   - before-after
-   - role state
-   - concept metaphor
-   - method layers
-   - map route
-   - mini comic
-5. Invent a fresh low-tech metaphor using 1-2 objects such as paper box, drawer, old machine, funnel, scale, mailbox, door, well, ladder, pipe, thread ball, gate, turntable, black box, hole punch, noodle press, clothesline, or strange desk.
-6. Make the user-defined IP character participate in the core action.
-7. Output one prompt per image. Do not merge multiple images into one prompt unless the user asks for a multi-panel mini comic.
-
-## Default Shot List Rules
-
-If the user asks for a 配图方案 or shot list, return 3-6 image ideas by default. For each idea include:
-
-- Placement after which paragraph or section.
-- Image theme.
-- Core idea.
-- Structure type.
-- What the IP character does.
-- What the optional companion/object does.
-- Suggested objects.
-- Suggested Chinese labels.
-
-## Single Prompt Template
-
-Use and adapt this template:
+如果用户在 workspace 内工作，把最终图复制到：
 
 ```text
-Generate one standalone 16:9 horizontal Chinese article illustration.
-
-Visual style:
-Ian-style minimal white-paper Chinese article illustration. Pure white background by default. Minimalist thin black hand-drawn line art with slightly wobbly pen lines. Lots of empty space. Sparse handwritten Chinese annotations. Clean conceptual product-sketch feeling, like a simple-line article doodle. Not a poster, not a cute card, not a dense Xiaohongshu layout unless explicitly requested.
-
-User-defined IP character:
-{年龄} {性别}, {头发颜色} {头发长短/发型}, wearing {衣服颜色} {衣服款式} {衣服长短}, {裙子/裤子颜色} {裙子/裤子款式} {裙子/裤子长短}, {鞋子颜色} {鞋子款式} {鞋子长短/高度}. Optional accessories: {可选配饰}. Optional companion/object: {可选陪伴物/宠物/道具}. Character temperament: {角色气质}. The IP character should usually be a small guide character, around 8%-12% of the canvas width, not the visual centerpiece. The IP character must perform the core conceptual action.
-
-Color palette:
-Main color: {主色}. Secondary color: {辅助色}. Accent color: {强调色}. Background color: {背景色}. Forbidden colors: {禁用颜色}. Overall style keywords: {整体风格关键词}. Use colors consistently and sparsely. Do not invent a new palette.
-
-Theme:
-{theme}
-
-Structure type:
-{workflow | system partial | before-after | role state | concept metaphor | method layers | map route | mini comic}
-
-Core idea:
-{core idea}
-
-Composition:
-{where the IP character is, what they do, where the companion/object is, main object, how information or action flows}
-
-Suggested elements:
-{element 1} / {element 2} / {element 3} / {element 4}
-
-Chinese handwritten labels:
-{label 1} / {label 2} / {label 3} / {label 4} / {optional label 5}
-
-Color use:
-White background dominates 65%-80% by default. Black line art dominates structure and text. User-defined main/accent colors appear only on the IP character, key arrows, labels, or emphasis marks. Keep colors sparse unless the user asks for a poster/card.
-
-Constraints:
-One image explains only one core structure. Keep the IP character small by default, around 8%-12% of the canvas width, while the main visual focus should be the workflow, object metaphor, system structure, or page mockup. Preserve at least 45%-55% blank space. Use at most 2-4 short Chinese labels. Do not write a top-left diagram title. Do not change the base Ian-style simple-line white-paper drawing style. Do not make it PPT, formal infographic, complex architecture, realistic portrait, 3D render, generic anime character, paper-doll face, stick-figure face, creepy simplified face, blank expressionless face, mascot-only design, childish poster, sticker-filled Xiaohongshu card, dense knowledge card, decorative scrapbook, or cute commercial illustration unless explicitly requested. Do not change the user's IP formula or color palette.
+assets/<article-slug>-illustrations/
 ```
 
-## Output
+按顺序命名：
 
-For prompt-only tasks, return:
+```text
+01-topic-name.png
+02-topic-name.png
+```
 
-- A short shot list or prompt list.
-- Each prompt as a separate fenced text block.
-- A compact note of which prompt is most stable and which is more experimental.
+保留原始生成文件，不要覆盖已有资产，除非用户明确要求替换。
 
-For JSON tasks, use the reference JSON as the base and customize only the fields the user asks to change.
+## 输出口径
+
+生成前的策略输出要短而准。生成后的交付要包含：
+
+- 生成了几张
+- 每张图的用途
+- 保存路径
+- 哪些图最稳，哪些图是可选
+
+不要长篇解释风格理论；让图自己说话。
