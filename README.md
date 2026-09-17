@@ -70,44 +70,6 @@ ip-all-png-template 是一个 Codex Skill，用来指导 AI Agent 为中文文�
 
 ---
 
-## 示例效果
-
-### 两个断点
-
-![两个断点](examples/images/01-two-breakpoints.png)
-
-### 按目的分拣
-
-![按目的分拣](examples/images/02-sort-by-purpose.png)
-
-### 一鱼多吃
-
-![一鱼多吃](examples/images/03-one-fish-many-uses.png)
-
-### 承接路径
-
-![承接路径](examples/images/04-handoff-path.png)
-
-### 信息井
-
-![信息井](examples/images/05-information-well.png)
-
-### 想法压机
-
-![想法压机](examples/images/06-idea-press.png)
-
-### 内容发酵
-
-![内容发酵](examples/images/07-content-fermentation.png)
-
-### 信任桥
-
-![信任桥](examples/images/08-trust-bridge.png)
-
-这些图片是风格校准样例，不是构图模板。使用时应该从当前文章重新发明隐喻，不要照抄旧案例的物件和构图。
-
----
-
 ## 安装
 
 克隆仓库：
@@ -183,45 +145,6 @@ Use $ian-xiaohei-illustrations 帮我编辑这张图，去掉左上角的“流�
 7. 每张图单独调用图像模型生成
 8. 按 QA checklist 检查：白底、留白、小黑动作、中文标注、非 PPT 感、非旧案例复刻
 9. 保存最终 PNG，并报告用途和路径
-
----
-
-## 目录结构
-
-```text
-.
-├── README.md
-├── LICENSE
-├── NOTICE.md
-├── assets/
-│   └── ian-wechat-qr.jpg
-├── examples/
-│   ├── images/
-│   │   ├── 01-two-breakpoints.png
-│   │   ├── 02-sort-by-purpose.png
-│   │   └── ...
-│   └── prompts.md
-└── ian-xiaohei-illustrations/
-    ├── SKILL.md
-    ├── agents/
-    │   └── openai.yaml
-    ├── assets/
-    │   └── examples/
-    └── references/
-        ├── style-dna.md
-        ├── xiaohei-ip.md
-        ├── composition-patterns.md
-        ├── prompt-template.md
-        └── qa-checklist.md
-```
-
-真正需要安装到 Codex 的是子目录：
-
-```text
-ian-xiaohei-illustrations/
-```
-
-根目录的 README、LICENSE、NOTICE 和 examples 是 GitHub 分享文档。
 
 ---
 
