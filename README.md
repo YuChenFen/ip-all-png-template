@@ -100,7 +100,7 @@ ip-all-png-template 是一个 Codex Skill，用来指导 AI Agent 为中文文�
 ## 上游作者
 
 **Ian (伊恩)**
-- GitHub: [helloianneo](https://github.com/helloianneo)m
+- GitHub: [helloianneo](https://github.com/helloianneo)
 
 ---
 
